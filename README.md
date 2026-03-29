@@ -93,11 +93,6 @@ KMS_KEY_ID=your-fips-140-key
 ```
 
 ---
-
-## 🔗 Related Projects
-- **[Outpass System (PassPortal)](https://github.com/pendalwarmadhukar/outpass)**: A secure college leave management system with a focus on digitized permissions and campus security.
-
----
 <p align="center">
   © 2026 <b>CloudShield Security Labs</b>. Protected by <b>AWS Identity and Access Management</b>.
 </p>
