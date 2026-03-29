@@ -95,11 +95,6 @@ KMS_KEY_ID=your-fips-140-key
 ```
 
 ---
-
-## 🔗 Related Projects
-- **[Outpass System (PassPortal)](https://github.com/pendalwarmadhukar/outpass)**: A secure digitized permission system for college campuses.
-
----
 <p align="center">
   © 2026 <b>CloudShield Security Labs</b>. Protected by <b>AWS Identity and Access Management</b>.
 </p>
