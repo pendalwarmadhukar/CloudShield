@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="C:\Users\madhu\.gemini\antigravity\brain\d62e6914-7fe7-41d1-a553-3f7e12153049\cloudshield_cyber_banner_1774788125297.png" width="800" alt="CloudShield Banner">
+  <img src="./docs/assets/cloudshield_banner.png" width="800" alt="CloudShield Banner">
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@
 
 ---
 
-## 👨‍💻 Project Infrastructure
+## 👨💻 Project Infrastructure
 
 <table align="center">
   <tr>
@@ -93,6 +93,11 @@ AWS_REGION=us-east-1
 S3_BUCKET_NAME=your-private-vault
 KMS_KEY_ID=your-fips-140-key
 ```
+
+---
+
+## 🔗 Related Projects
+- **[Outpass System (PassPortal)](https://github.com/pendalwarmadhukar/outpass)**: A secure college leave management system with a focus on digitized permissions and campus security.
 
 ---
 <p align="center">
