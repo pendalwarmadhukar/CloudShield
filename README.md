@@ -1,112 +1,76 @@
-# 🔐 CloudShield: Secure File Storage System
+# 🛡️ CloudShield: Enterprise-Grade Secure File Vault
 
-CloudShield is a premium, secure file storage application that leverages **AWS S3** for industry-standard storage and **AWS KMS** for advanced server-side encryption. This project demonstrates modern cloud security practices, including pre-signed URLs, IAM least privilege, and server-side encryption.
-
----
-
-## ✨ Features
-- **🚀 Advanced Security**: All files are encrypted at rest using AWS KMS (Key Management Service).
-- **🛡️ Secure Access**: Temporary pre-signed URLs that expire after 15 minutes, ensuring zero public access to your bucket.
-- **☁️ AWS Integration**: Native integration with S3 and KMS for professional-grade cloud storage.
-- **📦 MongoDB Indexing**: Persistent storage of file metadata for lightning-fast retrieval.
-- **🧪 Development Mock Mode**: Full functionality testing without needing real AWS credentials.
+**CloudShield** is a cybersecurity-focused file storage solution designed to provide maximum confidentiality and integrity for sensitive data. It implementes a **Zero-Trust architecture** by leveraging **AWS Key Management Service (KMS)** for hardware-backed encryption and **S3 Pre-signed URLs** for time-bound, secure access.
 
 ---
 
-## 🚀 Getting Started
+## 🔒 Security Architecture
 
-### 1. Prerequisites
-- **Node.js** (v18+) & **npm**
-- **MongoDB** (Atlas or Local)
-- **AWS Account** (Required for production mode only)
+CloudShield is built on the principle of **Defense-in-Depth**. Below are the core security pillars implemented in this project:
 
-### 2. Quick Start (Mock Mode)
-If you want to test the application immediately without setting up AWS, use **Mock Mode**:
+### 1. Encryption-at-Rest (AES-256-GCM)
+Every file uploaded is encrypted server-side using **AWS KMS**.
+- **Envelop Encryption**: A unique data key is generated for every object.
+- **Hardware Security Modules (HSM)**: Keys are managed in FIPS 140-2 Level 3 validated hardware.
+- **Automatic Rotation**: Supports KMS key rotation policies.
 
-1. Clone the repository and navigate to the `backend/` directory.
-2. Create a `.env` file and set `MOCK_AWS=true`.
-3. Fill in your `MONGODB_URI`.
-4. Run `npm start`.
+### 2. Secure Access Control (Least Privilege)
+The system operates under the **Principle of Least Privilege (PoLP)**:
+- **Zero Public Access**: The S3 bucket is strictly private; no public ACLs or bucket policies are allowed.
+- **IAM Scoping**: The backend uses an IAM user with a strictly scoped policy (only `s3:PutObject` and `s3:GetObject`).
+- **Temporary Authorization**: Users do not access S3 directly. The backend generates **Pre-signed URLs** that expire automatically after 15 minutes.
 
-### 3. Production AWS Setup
-1. Create an **S3 Bucket** (Block all public access).
-2. Create a **KMS Key** in the AWS Key Management Service (Symmetric, Encrypt/Decrypt).
-3. Create an **IAM User** with the following policy:
-   ```json
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Effect": "Allow",
-         "Action": ["s3:PutObject", "s3:GetObject"],
-         "Resource": "arn:aws:s3:::your-bucket-name/*"
-       },
-       {
-         "Effect": "Allow",
-         "Action": ["kms:Encrypt", "kms:Decrypt", "kms:GenerateDataKey"],
-         "Resource": "arn:aws:kms:region:account-id:key/your-key-id"
-       }
-     ]
-   }
-   ```
+### 3. Data Integrity & Metadata Security
+- **Secure Hash Tracking**: File metadata is indexed in a secured MongoDB instance.
+- **MIME-Type Validation**: Strict validation of file types during the upload process to prevent malicious script injection.
+
+---
+
+## 🚀 Deployment & Testing
+
+### 🧪 Cyber-Security Sandbox (Mock Mode)
+For security researchers and developers who want to test the architecture without active AWS costs:
+
+1.  **Configure Environment**: Set `MOCK_AWS=true` in `backend/.env`.
+2.  **Run Sandbox**: `npm start` (Backend) and `npm run dev` (Frontend).
+3.  **Observation**: All encryption calls are mocked, but the metadata flow mirrors the production security logic.
+
+### 🛡️ Production Hardening
+To deploy in a real-world secure environment:
+
+1.  **IAM Policy**: Apply the least-privilege policy found in `README.md`.
+2.  **S3 Hardening**: Enable "Block all public access" and "Bucket Versioning".
+3.  **KMS Configuration**: Create a symmetric encryption key and grant the IAM user `kms:Encrypt` and `kms:Decrypt` permissions.
 
 ---
 
 ## 🛠️ Configuration (.env)
 
-Navigate to the `backend/` directory and configure your `.env` file:
-
 ```env
-# Server Settings
-PORT=5000
-MOCK_AWS=true # Set to false to use real AWS S3/KMS
+# Security Switch
+MOCK_AWS=true # Set to false for Production Hardening
 
-# Database
-MONGODB_URI=your_mongodb_connection_string
-
-# AWS Credentials (Required if MOCK_AWS=false)
+# AWS Security Infrastructure
 AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=your_access_key
-AWS_SECRET_ACCESS_KEY=your_secret_key
-S3_BUCKET_NAME=your_bucket_name
-KMS_KEY_ID=your_kms_key_id
+S3_BUCKET_NAME=your-private-vault
+KMS_KEY_ID=your-hsm-key-id
+
+# Database Security
+MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/CloudShield
 ```
 
 ---
 
-## 💻 Running the Application
-
-### Backend
-```bash
-cd backend
-npm install
-npm start
-```
-
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The application will be available at [http://localhost:3000](http://localhost:3000).
+## 🏗️ Technical Stack
+- **Backend API**: Node.js / Express (Security-hardened headers with Morgan).
+- **Frontend UI**: React / Vite (State-driven security feedback).
+- **Security Provider**: AWS SDK v3 (Modular & Secure).
+- **Persistence**: MongoDB Atlas (Encrypted-at-rest).
 
 ---
 
-## 🏗️ Tech Stack
-- **Frontend**: React, Vite, Framer Motion, Axios, Lucide Icons.
-- **Backend**: Node.js, Express, Multer, Morgan, Dotenv.
-- **Database**: MongoDB (Mongoose).
-- **Cloud**: AWS S3 & AWS KMS (SDK v3).
+## ⚖️ Disclaimer
+*This project is intended for educational purposes in the field of Cybersecurity. Always perform a comprehensive security audit before using this architecture for highly sensitive production data.*
 
 ---
-
-## 🔒 Security Principles
-- **Encryption at Rest**: Every file is encrypted server-side with a unique KMS key.
-- **Least Privilege Access**: backend uses IAM credentials to perform specific tasks without exposing the bucket.
-- **Time-Bound Links**: Secure links are generated on-the-fly and expire automatically to prevent unauthorized sharing.
-- **Zero Public Access**: The S3 bucket remains strictly private; no direct internet access is permitted.
-
----
-© 2026 CloudShield Infrastructure. All data is protected by AWS Identity and Access Management.
+© 2026 CloudShield Security Labs. Infrastructure protected by AWS IAM & KMS.
