@@ -1,32 +1,30 @@
 <p align="center">
-  <img src="./docs/assets/cloudshield_banner.png" width="800" alt="CloudShield Banner">
+  <img src="./docs/assets/banner.svg" alt="CloudShield Banner">
+</p>
+
+<h3 align="center"><font color="#ef4444">Military-Grade Encryption • Zero-Trust Access • High Performance</font></h3>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/REACT-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/NODE.JS-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/EXPRESS.JS-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/MONGODB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white" />
 </p>
 
 <p align="center">
-  <h1 align="center">🔐 CLOUDSHIELD: ENTERPRISE SECURITY</h1>
-  <p align="center">
-    <b>A High-Performance Cybersecurity File Vault with AWS KMS & S3 Integration</b>
-    <br />
-    <br />
-    <a href="https://linkedin.com/in/pendalwar-sainath-598169349">
-      <img src="https://img.shields.io/badge/LINKEDIN-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin">
-    </a>
-    <a href="mailto:24j45a6720@mallareddyuniversity.ac.in">
-      <img src="https://img.shields.io/badge/GMAIL-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="gmail">
-    </a>
-    <a href="https://github.com/Sainath9391">
-      <img src="https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white" alt="github">
-    </a>
-    <a href="https://instagram.com">
-      <img src="https://img.shields.io/badge/INSTAGRAM-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="instagram">
-    </a>
-  </p>
+  <img src="https://img.shields.io/badge/Stars-0-gray?style=flat-square" />
+  <img src="https://img.shields.io/badge/Forks-0-gray?style=flat-square" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" />
+  <img src="https://img.shields.io/badge/Status-Production_Ready-cyan?style=flat-square" />
+  <img src="https://img.shields.io/badge/Type-Cloud_Storage-red?style=flat-square" />
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Project_Status-Shield_Active-00FF00?style=flat-square" alt="Shield Status">
-  <img src="https://img.shields.io/badge/Security-KMS_Encrypted-6366f1?style=flat-square" alt="Encryption Status">
-  <img src="https://img.shields.io/badge/Infrastructure-AWS_S3-FF9900?style=flat-square" alt="Infrastructure">
+  <b><a href="#quick-start-deployment">Quick Start</a> &nbsp;·&nbsp;
+  <a href="https://github.com/pendalwarmadhukar/CloudShield">Repository</a> &nbsp;·&nbsp;
+  <a href="https://github.com/pendalwarmadhukar/CloudShield/issues">Report Bug</a> &nbsp;·&nbsp;
+  <a href="https://github.com/pendalwarmadhukar/CloudShield/issues">Request Feature</a></b>
 </p>
 
 ---

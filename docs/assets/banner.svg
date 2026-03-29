@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 300" width="1000" height="300">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5B21B6"/>
+      <stop offset="30%" stop-color="#9D174D"/>
+      <stop offset="60%" stop-color="#9F1239"/>
+      <stop offset="85%" stop-color="#C2410C"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <clipPath id="wave">
+      <path d="M0,0 L1000,0 L1000,240 C750,300 250,210 0,260 Z" />
+    </clipPath>
+  </defs>
+  <rect width="1000" height="300" fill="url(#bg)" clip-path="url(#wave)" />
+  <text x="500" y="140" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="72" fill="#ffffff" text-anchor="middle">CloudShield</text>
+  <text x="500" y="190" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="22" fill="#f3f4f6" text-anchor="middle">Secure File Storage | AES-256 Encryption | Zero-Trust Architecture</text>
+</svg>
