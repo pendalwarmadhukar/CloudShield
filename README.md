@@ -1,81 +1,105 @@
-# 🛡️ CloudShield: Enterprise-Grade Secure File Vault
+<p align="center">
+  <img src="C:\Users\madhu\.gemini\antigravity\brain\d62e6914-7fe7-41d1-a553-3f7e12153049\cloudshield_cyber_banner_1774788125297.png" width="800" alt="CloudShield Banner">
+</p>
 
-**CloudShield** is a cybersecurity-focused file storage solution designed to provide maximum confidentiality and integrity for sensitive data. It implementes a **Zero-Trust architecture** by leveraging **AWS Key Management Service (KMS)** for hardware-backed encryption and **S3 Pre-signed URLs** for time-bound, secure access.
+<p align="center">
+  <h1 align="center">🔐 CLOUDSHIELD: ENTERPRISE SECURITY</h1>
+  <p align="center">
+    <b>A High-Performance Cybersecurity File Vault with AWS KMS & S3 Integration</b>
+    <br />
+    <br />
+    <a href="https://linkedin.com/in/pendalwar-sainath-598169349">
+      <img src="https://img.shields.io/badge/LINKEDIN-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin">
+    </a>
+    <a href="mailto:24j45a6720@mallareddyuniversity.ac.in">
+      <img src="https://img.shields.io/badge/GMAIL-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="gmail">
+    </a>
+    <a href="https://github.com/Sainath9391">
+      <img src="https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white" alt="github">
+    </a>
+    <a href="https://instagram.com">
+      <img src="https://img.shields.io/badge/INSTAGRAM-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="instagram">
+    </a>
+  </p>
+</p>
 
----
-
-## 🔒 Security Architecture
-
-CloudShield is built on the principle of **Defense-in-Depth**. Below are the core security pillars implemented in this project:
-
-### 1. Encryption-at-Rest (AES-256-GCM)
-Every file uploaded is encrypted server-side using **AWS KMS**.
-- **Envelop Encryption**: A unique data key is generated for every object.
-- **Hardware Security Modules (HSM)**: Keys are managed in FIPS 140-2 Level 3 validated hardware.
-- **Automatic Rotation**: Supports KMS key rotation policies.
-
-### 2. Secure Access Control (Least Privilege)
-The system operates under the **Principle of Least Privilege (PoLP)**:
-- **Zero Public Access**: The S3 bucket is strictly private; no public ACLs or bucket policies are allowed.
-- **IAM Scoping**: The backend uses an IAM user with a strictly scoped policy (only `s3:PutObject` and `s3:GetObject`).
-- **Temporary Authorization**: Users do not access S3 directly. The backend generates **Pre-signed URLs** that expire automatically after 15 minutes.
-
-### 3. Data Integrity & Metadata Security
-- **Secure Hash Tracking**: File metadata is indexed in a secured MongoDB instance.
-- **MIME-Type Validation**: Strict validation of file types during the upload process to prevent malicious script injection.
-
----
-
-## 🚀 Deployment & Testing
-
-### 🧪 Cyber-Security Sandbox (Mock Mode)
-For security researchers and developers who want to test the architecture without active AWS costs:
-
-1.  **Configure Environment**: Set `MOCK_AWS=true` in `backend/.env`.
-2.  **Run Sandbox**: `npm start` (Backend) and `npm run dev` (Frontend).
-3.  **Observation**: All encryption calls are mocked, but the metadata flow mirrors the production security logic.
-
-### 🛡️ Production Hardening
-To deploy in a real-world secure environment:
-
-1.  **IAM Policy**: Apply the least-privilege policy found in `README.md`.
-2.  **S3 Hardening**: Enable "Block all public access" and "Bucket Versioning".
-3.  **KMS Configuration**: Create a symmetric encryption key and grant the IAM user `kms:Encrypt` and `kms:Decrypt` permissions.
+<p align="center">
+  <img src="https://img.shields.io/badge/Project_Status-Shield_Active-00FF00?style=flat-square" alt="Shield Status">
+  <img src="https://img.shields.io/badge/Security-KMS_Encrypted-6366f1?style=flat-square" alt="Encryption Status">
+  <img src="https://img.shields.io/badge/Infrastructure-AWS_S3-FF9900?style=flat-square" alt="Infrastructure">
+</p>
 
 ---
 
-## 🛠️ Configuration (.env)
+## 👨‍💻 Project Infrastructure
 
-```env
-# Security Switch
-MOCK_AWS=true # Set to false for Production Hardening
+<table align="center">
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🛡️ Security Protocols</h3>
+      <ul>
+        <li><b>Algorithm:</b> AES-256-GCM (Hardware-Backed)</li>
+        <li><b>Keys:</b> Symmetric Multi-Region AWS KMS</li>
+        <li><b>Access:</b> IAM Policy (Strictly Scoped)</li>
+        <li><b>Transport:</b> TLS 1.3 / S3 Pre-signed URLs</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <h3>🏗️ Tech Stack</h3>
+      <ul>
+        <li><b>Frontend:</b> React 19 + Framer Motion</li>
+        <li><b>Backend:</b> Node.js + Express + Multer</li>
+        <li><b>Cloud:</b> AWS S3 & AWS KMS (SDK v3)</li>
+        <li><b>Database:</b> MongoDB Atlas (Mongoose)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-# AWS Security Infrastructure
-AWS_REGION=us-east-1
-S3_BUCKET_NAME=your-private-vault
-KMS_KEY_ID=your-hsm-key-id
+### 🔒 Core Cybersecurity Architecture
 
-# Database Security
-MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/CloudShield
+```mermaid
+graph TD
+    A[Public Web Client] -- Multipart-Upload --> B[Secure Backend Node]
+    B -- Generate Request --> C((AWS KMS))
+    C -- Data Key --> B
+    B -- Encrypt @ Rest --> D{AWS S3 Vault}
+    D -- 15m Expire Link --> A
+    subgraph "Zero-Trust Environment"
+    B
+    C
+    D
+    end
+    style D fill:#6366f1,stroke:#fff,stroke-width:2px
+    style C fill:#FF9900,stroke:#fff,stroke-width:2px
 ```
 
 ---
 
-## 🏗️ Technical Stack
-- **Backend API**: Node.js / Express (Security-hardened headers with Morgan).
-- **Frontend UI**: React / Vite (State-driven security feedback).
-- **Security Provider**: AWS SDK v3 (Modular & Secure).
-- **Persistence**: MongoDB Atlas (Encrypted-at-rest).
+## ⚡ Quick Start Deployment
 
----
+### 🧪 Cyber-Security Sandbox (Mock Mode)
+Test the full logic without active AWS credentials.
+```bash
+# Set MOCK_AWS=true in .env
+cd backend && npm start
+cd frontend && npm run dev
+```
 
-## ⚖️ Disclaimer
-*This project is intended for educational purposes in the field of Cybersecurity. Always perform a comprehensive security audit before using this architecture for highly sensitive production data.*
+### 🛡️ Production Hardening
+```env
+MOCK_AWS=false
+AWS_REGION=us-east-1
+S3_BUCKET_NAME=your-private-vault
+KMS_KEY_ID=your-fips-140-key
+```
 
 ---
 
 ## 🔗 Related Projects
-- **[Outpass System (PassPortal)](https://github.com/pendalwarmadhukar/outpass)**: A secure college leave management system with a focus on digitized permissions and campus security.
+- **[Outpass System (PassPortal)](https://github.com/pendalwarmadhukar/outpass)**: A secure digitized permission system for college campuses.
 
 ---
-© 2026 CloudShield Security Labs. Infrastructure protected by AWS IAM & KMS.
+<p align="center">
+  © 2026 <b>CloudShield Security Labs</b>. Protected by <b>AWS Identity and Access Management</b>.
+</p>
