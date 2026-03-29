@@ -73,4 +73,9 @@ MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/CloudShield
 *This project is intended for educational purposes in the field of Cybersecurity. Always perform a comprehensive security audit before using this architecture for highly sensitive production data.*
 
 ---
+
+## 🔗 Related Projects
+- **[Outpass System (PassPortal)](https://github.com/pendalwarmadhukar/outpass)**: A secure college leave management system with a focus on digitized permissions and campus security.
+
+---
 © 2026 CloudShield Security Labs. Infrastructure protected by AWS IAM & KMS.
