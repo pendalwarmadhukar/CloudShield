@@ -1,24 +1,25 @@
 {
-  "name": "frontend",
+  "name": "cloudshield-frontend",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "npm run dev",
     "build": "vite build",
     "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@vitejs/plugin-react": "^6.0.1",
-    "axios": "^1.14.0",
-    "framer-motion": "^12.38.0",
-    "lucide-react": "^1.7.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "vite": "^8.0.3"
+    "axios": "^1.6.8",
+    "cloudshield": "file:..",
+    "crypto-js": "^4.2.0",
+    "framer-motion": "^11.1.7",
+    "lucide-react": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.0"
   }
 }
