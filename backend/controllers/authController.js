@@ -18,11 +18,16 @@ exports.register = async (req, res) => {
             return res.status(400).json({ error: 'Please provide all required fields' });
         }
 
-        // Check if user exists
-        const userExists = await User.findOne({ email });
+        // Check if username exists
+        const usernameExists = await User.findOne({ username });
+        if (usernameExists) {
+            return res.status(400).json({ error: 'Username already taken by another agent' });
+        }
 
-        if (userExists) {
-            return res.status(400).json({ error: 'User already exists with this email' });
+        // Check if email exists
+        const emailExists = await User.findOne({ email });
+        if (emailExists) {
+            return res.status(400).json({ error: 'Email already registered in the CloudShield network' });
         }
 
         // Create user
@@ -41,9 +46,19 @@ exports.register = async (req, res) => {
         });
     } catch (error) {
         console.error('Registration Error:', error);
-        res.status(500).json({ error: 'Server error during registration' });
+        
+        // Handle MongoDB Duplicate Key Error (Code 11000)
+        if (error.code === 11000) {
+            const field = Object.keys(error.keyValue)[0];
+            return res.status(400).json({ 
+                error: `${field.charAt(0).toUpperCase() + field.slice(1)} already exists. Please choose another.` 
+            });
+        }
+
+        res.status(500).json({ error: 'Secure node malfunctioned during registration. Try again.' });
     }
 };
+
 
 // @desc    Authenticate a user
 // @route   POST /api/auth/login

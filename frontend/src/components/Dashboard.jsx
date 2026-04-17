@@ -187,128 +187,151 @@ function Dashboard() {
 
 
   return (
-    <div className="container" style={{ paddingBottom: '4rem' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', marginTop: '1rem' }}>
+    <div className="container" style={{ paddingBottom: '5rem' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4rem', paddingTop: '1.5rem' }}>
         <motion.div 
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}
         >
-          <Shield size={36} color="var(--primary)" filter="drop-shadow(0 0 10px rgba(99,102,241,0.5))" />
-          <h1 style={{ fontSize: '1.75rem', margin: 0 }}>CloudShield</h1>
+          <div style={{ position: 'relative' }}>
+            <Shield size={42} color="var(--primary)" style={{ filter: 'drop-shadow(0 0 10px var(--primary-glow))' }} />
+            <motion.div 
+              animate={{ opacity: [0.2, 0.5, 0.2] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+              style={{ position: 'absolute', inset: -5, borderRadius: '50%', background: 'var(--primary-glow)', filter: 'blur(12px)', zIndex: -1 }}
+            />
+          </div>
+          <div>
+            <h1 style={{ fontSize: '2rem', margin: 0, letterSpacing: '-0.02em' }}>CloudShield</h1>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', letterSpacing: '0.1em', fontWeight: 700, margin: 0 }}>V 2.0 SECURE NODE</p>
+          </div>
         </motion.div>
 
         <motion.div 
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}
         >
-          <span style={{ color: 'var(--text-muted)' }}>Agent <strong style={{ color: 'white' }}>{user.username}</strong></span>
-          <button onClick={handleLogout} className="btn btn-danger" style={{ padding: '0.5rem 1rem' }}>
-            <LogOut size={16} /> Disconnect
+          <div style={{ textAlign: 'right', display: 'none', sm: 'block' }}>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, marginBottom: '0.1rem' }}>ACTIVE AGENT</p>
+            <p style={{ fontSize: '1rem', fontWeight: 600, color: 'white' }}>{user.username}</p>
+          </div>
+          <button onClick={handleLogout} className="btn btn-danger" style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem' }}>
+            <LogOut size={16} /> TERMINATE
           </button>
         </motion.div>
       </header>
 
       <main>
-        <motion.div 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="card glass neon-shadow" 
-          style={{ marginBottom: '2.5rem' }}
-        >
-          <div 
-            className="upload-zone"
-            onClick={() => document.getElementById('fileInput').click()}
+        <section style={{ marginBottom: '4rem' }}>
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="card glass neon-shadow" 
           >
-            <input 
-              type="file" 
-              id="fileInput" 
-              hidden 
-              onChange={handleFileUpload}
-              disabled={uploading}
-            />
-            {uploading ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-                <Loader2 className="animate-spin" size={48} color="var(--primary)" />
-                <p style={{ fontSize: '1.1rem', fontWeight: 500 }}>Executing AES-256 Encryption & Upload...</p>
-              </div>
-            ) : (
-              <div>
-                <Upload size={48} color="var(--primary)" style={{ marginBottom: '1rem', opacity: 0.8 }} />
-                <p style={{ fontSize: '1.25rem', fontWeight: 600, color: 'white' }}>Engage file drop sequence</p>
-                <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
-                  Assets are encrypted server-side and cryptographically locked to Admin clearance.
-                </p>
-              </div>
-            )}
-          </div>
+            {uploading && <div className="scan-line" />}
+            <div 
+              className="upload-zone"
+              onClick={() => !uploading && document.getElementById('fileInput').click()}
+            >
+              <input 
+                type="file" 
+                id="fileInput" 
+                hidden 
+                onChange={handleFileUpload}
+                disabled={uploading}
+              />
+              {uploading ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+                  <div style={{ position: 'relative' }}>
+                    <Loader2 className="animate-spin" size={64} color="var(--primary)" />
+                    <motion.div 
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                        style={{ position: 'absolute', inset: -20, border: '2px solid var(--primary)', borderRadius: '50%', borderStyle: 'dashed', opacity: 0.3 }}
+                    />
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontSize: '1.25rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>CRITICAL OPERATION IN PROGRESS</p>
+                    <p style={{ color: 'var(--text-dim)' }}>Executing E2E Cryptographic Locking (AES-256)</p>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ padding: '1rem' }}>
+                  <div style={{ marginBottom: '1.5rem', display: 'inline-flex', padding: '1.5rem', borderRadius: '50%', background: 'rgba(99, 102, 241, 0.05)', border: '1px solid var(--border-glass)' }}>
+                    <Upload size={48} color="var(--primary)" />
+                  </div>
+                  <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'white', marginBottom: '0.75rem' }}>INITIALIZE ASSET HANDLER</h2>
+                  <p style={{ fontSize: '1.1rem', color: 'var(--text-dim)', maxWidth: '500px', margin: '0 auto' }}>
+                    Zero-Knowledge encryption protocol ready. Assets are cryptographically eradicated from client memory after secure cloud handoff.
+                  </p>
+                </div>
+              )}
+            </div>
 
-          <AnimatePresence>
-            {error && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="status status-error" 
-                style={{ marginTop: '1.5rem', width: '100%', padding: '1rem' }}
-              >
-                <AlertCircle size={20} />
-                <span>{error}</span>
-              </motion.div>
-            )}
-            {success && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="status status-success" 
-                style={{ marginTop: '1.5rem', width: '100%', padding: '1rem' }}
-              >
-                <FileCheck size={20} />
-                <span>{success}</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+            <AnimatePresence>
+              {(error || success) && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  style={{ marginTop: '2rem' }}
+                >
+                  {error && (
+                    <div className="status status-error" style={{ width: '100%', padding: '1.25rem' }}>
+                      <AlertCircle size={20} />
+                      <span style={{ fontWeight: 600 }}>{error}</span>
+                    </div>
+                  )}
+                  {success && (
+                    <div className="status status-success" style={{ width: '100%', padding: '1.25rem' }}>
+                      <FileCheck size={20} />
+                      <span style={{ fontWeight: 600 }}>{success}</span>
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </section>
 
-        {/* --- SEARCH AND FILTER UI INJECTED HERE --- */}
         <section>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <h2 style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'white', margin: 0 }}>
-              <Lock size={22} color="var(--primary)" /> Encrypted Operations Vault
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.75rem', display: 'flex', alignItems: 'center', gap: '1rem', color: 'white', margin: 0 }}>
+              <Lock size={28} color="var(--primary)" /> SECURE VAULT
             </h2>
             
-            <div style={{ display: 'flex', gap: '1rem', flex: '1 1 auto', justifyContent: 'flex-end' }}>
-              <div style={{ position: 'relative', maxWidth: '300px', width: '100%' }}>
-                <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)' }} />
+            <div style={{ display: 'flex', gap: '1.25rem', flex: '1 1 400px', justifyContent: 'flex-end' }}>
+              <div style={{ position: 'relative', flex: 1, maxWidth: '350px' }}>
+                <Search size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)' }} />
                 <input 
                   type="text" 
-                  placeholder="Query assets..." 
+                  placeholder="QUERY DATASETS..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  style={{ paddingLeft: '2.5rem', background: 'rgba(0,0,0,0.4)' }}
+                  style={{ paddingLeft: '3rem', fontSize: '0.9rem', fontWeight: 600, letterSpacing: '0.05em' }}
                 />
               </div>
               
               <div style={{ position: 'relative' }}>
-                <Filter size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
+                <Filter size={18} color="var(--text-muted)" style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
                 <select 
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
                   style={{ 
-                    appearance: 'none', padding: '0.875rem 2rem 0.875rem 2.5rem', borderRadius: '0.75rem',
-                    border: '1px solid var(--border-glass)', background: 'rgba(0, 0, 0, 0.4)', color: 'white',
-                    fontFamily: 'inherit', fontSize: '1rem', outline: 'none', cursor: 'pointer'
+                    appearance: 'none', padding: '1rem 2.5rem 1rem 3rem', borderRadius: '0.85rem',
+                    border: '1px solid var(--border-glass)', background: 'rgba(0, 0, 0, 0.5)', color: 'white',
+                    fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, outline: 'none', cursor: 'pointer',
+                    letterSpacing: '0.05em'
                   }}
                 >
-                  <option value="all">All Assets</option>
-                  <option value="pdf">PDFs</option>
-                  <option value="image">Images</option>
-                  <option value="document">Documents</option>
+                  <option value="all">ALL ASSETS</option>
+                  <option value="pdf">PDF NODES</option>
+                  <option value="image">VISUAL DATA</option>
+                  <option value="document">PLAINTEXT / DOC</option>
                 </select>
               </div>
             </div>
@@ -318,63 +341,67 @@ function Dashboard() {
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               className="glass" 
-              style={{ padding: '4rem 2rem', textAlign: 'center' }}
+              style={{ padding: '6rem 2rem', textAlign: 'center', borderStyle: 'dashed' }}
             >
-              <FileIcon size={48} color="var(--text-muted)" style={{ opacity: 0.3, marginBottom: '1rem' }} />
-              <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>Operations Vault is completely empty.</p>
+              <FileIcon size={64} color="var(--text-muted)" style={{ opacity: 0.2, marginBottom: '1.5rem' }} />
+              <p style={{ color: 'var(--text-dim)', fontSize: '1.25rem', fontWeight: 500 }}>VAULT IS CURRENTLY DEVOID OF ASSETS</p>
             </motion.div>
           ) : filteredFiles.length === 0 ? (
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               className="glass" 
-              style={{ padding: '3rem 2rem', textAlign: 'center' }}
+              style={{ padding: '5rem 2rem', textAlign: 'center' }}
             >
-              <Search size={36} color="var(--text-muted)" style={{ opacity: 0.3, marginBottom: '1rem' }} />
-              <p style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>No assets match your query.</p>
+              <Search size={48} color="var(--text-muted)" style={{ opacity: 0.2, marginBottom: '1.5rem' }} />
+              <p style={{ color: 'var(--text-dim)', fontSize: '1.1rem' }}>NO ASSETS MATCH SPECIFIED QUERY PROTOCOL</p>
             </motion.div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <AnimatePresence>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100%, 1fr))', gap: '1.25rem' }}>
+              <AnimatePresence mode="popLayout">
                 {filteredFiles.map((file, index) => (
                   <motion.div 
                     key={file._id}
-                    layout // This enables smooth repositioning
-                    initial={{ scale: 0.95, opacity: 0, x: -20 }}
-                    animate={{ scale: 1, opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                    transition={{ delay: index * 0.05 }}
-                    className="file-item glass"
+                    layout 
+                    initial={{ scale: 0.98, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="file-item glass neon-shadow"
+                    style={{ borderRadius: '1rem', padding: '1.5rem 2rem' }}
                   >
-                    <div style={{ flex: 1, minWidth: 0, marginRight: '1rem' }}>
-                      <p style={{ fontWeight: 600, marginBottom: '0.35rem', color: 'white', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {file.originalName}
-                      </p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
-                        <span className="status status-success" style={{ fontSize: '0.7rem', padding: '0.1rem 0.4rem', border: 'none' }}>
-                          <Shield size={10} style={{marginRight: 2}} /> Secured
-                        </span>
-                        <span>•</span>
-                        <span>{file.size}</span>
-                        <span>•</span>
-                        <span>{new Date(file.uploadedAt).toLocaleString()}</span>
-                      </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1, minWidth: 0 }}>
+                        <div style={{ padding: '0.85rem', borderRadius: '0.75rem', background: 'rgba(99, 102, 241, 0.1)', color: 'var(--primary)', border: '1px solid var(--border-glass)' }}>
+                            <FileIcon size={24} />
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                            <p style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '0.4rem', color: 'white', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {file.originalName.toUpperCase()}
+                            </p>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                                <span className="status-success" style={{ fontSize: '0.7rem', padding: '0.2rem 0.6rem', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)', fontWeight: 800, letterSpacing: '0.05em' }}>
+                                    ENCRYPTED
+                                </span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>{file.size}</span>
+                                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600 }}>{new Date(file.uploadedAt).toLocaleDateString()}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '0.75rem', flexShrink: 0 }}>
+
+                    <div style={{ display: 'flex', gap: '1rem', marginLeft: '1.5rem' }}>
                       <button 
                         className="btn btn-primary"
                         onClick={() => handleDownload(file._id, file.originalName)}
-                        style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
+                        style={{ padding: '0.6rem 1.25rem', fontSize: '0.9rem', whiteSpace: 'nowrap' }}
                       >
-                        <Download size={16} /> 
-                        Generate Key Link
+                        <Download size={18} /> DECRYPT
                       </button>
                       <button 
                         className="btn btn-danger"
                         onClick={() => handleDelete(file._id)}
-                        style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
-                        title="Eradicate Asset"
+                        style={{ padding: '0.6rem', width: '42px' }}
+                        title="ERADICATE"
                       >
-                        <Trash2 size={16} /> 
+                        <Trash2 size={18} /> 
                       </button>
                     </div>
                   </motion.div>
@@ -385,11 +412,14 @@ function Dashboard() {
         </section>
       </main>
 
-      <footer style={{ marginTop: '5rem', textAlign: 'center', opacity: 0.3, fontSize: '0.85rem' }}>
-        <p>RESTRICTED ACCESS. All operations are monitored through JWT authentication protocols.</p>
+      <footer style={{ marginTop: '8rem', textAlign: 'center', borderTop: '1px solid var(--border-glass)', paddingTop: '3rem' }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', letterSpacing: '0.2em', fontWeight: 600 }}>
+            RESTRICTED AREA • CLOUDSHIELD QUANTUM ENCRYPTION AGENT • {new Date().getFullYear()}
+        </p>
       </footer>
     </div>
   );
+
 }
 
 export default Dashboard;
