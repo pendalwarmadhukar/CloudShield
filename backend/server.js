@@ -38,13 +38,22 @@ app.post('/api/proxy-s3', async (req, res) => {
 
 if (process.env.MOCK_AWS === 'true') {
     app.get('/mock/download/*', (req, res) => {
-        res.status(200).send(`
-            <div style="font-family: sans-serif; text-align: center; padding: 50px;">
-                <h2 style="color: #6366f1;">Mock Secure File Decryption</h2>
-                <p>In a production environment, this link would automatically download the AES-256 decrypted file.</p>
-                <p style="color: #666; font-size: 0.9em;">Requested Key: ${req.params[0]}</p>
-            </div>
-        `);
+        const fs = require('fs');
+        const path = require('path');
+        const s3Key = req.params[0];
+        const mockFilePath = path.join(__dirname, 'mock_s3', s3Key.replace(/\//g, '-'));
+        
+        if (fs.existsSync(mockFilePath)) {
+            res.sendFile(mockFilePath);
+        } else {
+            res.status(200).send(`
+                <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+                    <h2 style="color: #6366f1;">Mock Secure File Decryption</h2>
+                    <p>In a production environment, this link would automatically download the AES-256 decrypted file.</p>
+                    <p style="color: #666; font-size: 0.9em;">Requested Key: ${s3Key} (File not found on disk)</p>
+                </div>
+            `);
+        }
     });
 }
 

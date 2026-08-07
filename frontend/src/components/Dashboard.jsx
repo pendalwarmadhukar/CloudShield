@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
 
-// Set base URL for backend requests
-axios.defaults.baseURL = 'http://localhost:5000';
+// Set base URL for backend requests dynamically
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : '');
 
 function Dashboard() {
   const [files, setFiles] = useState([]);
@@ -106,16 +106,16 @@ function Dashboard() {
       
       const secureUrl = response.data.url;
       
-      // If we are in MOCK mode, open directly
-      if (secureUrl.includes('/mock/download/')) {
-        window.open(secureUrl, '_blank');
-        return;
-      }
-      
       // ZERO-KNOWLEDGE E2E CLIENT-SIDE DECRYPTION
-      // 1. Fetch the raw encrypted blob from the S3 pre-signed URL (via backend CORS proxy)
-      const fileFetch = await axios.post('/api/proxy-s3', { url: secureUrl });
-      const encryptedText = fileFetch.data;
+      // 1. Fetch the raw encrypted blob from the URL
+      let encryptedText;
+      if (secureUrl.includes('/mock/download/')) {
+        const fileFetch = await axios.get(secureUrl);
+        encryptedText = fileFetch.data;
+      } else {
+        const fileFetch = await axios.post('/api/proxy-s3', { url: secureUrl });
+        encryptedText = fileFetch.data;
+      }
       
       // 2. Decrypt locally using the symmetrical user key
       const decryptedBytes = CryptoJS.AES.decrypt(encryptedText, userVaultKey);

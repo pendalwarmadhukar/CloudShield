@@ -29,7 +29,15 @@ exports.uploadFile = async (req, res) => {
         const fileKey = `cloudshield/${req.user._id}/${Date.now()}_${file.originalname}`;
 
         if (process.env.MOCK_AWS === 'true') {
-            console.log(`[MOCK AWS] Bypassing upload of: ${file.originalname}`);
+            const fs = require('fs');
+            const path = require('path');
+            const mockS3Dir = path.join(__dirname, '../mock_s3');
+            if (!fs.existsSync(mockS3Dir)) {
+                fs.mkdirSync(mockS3Dir, { recursive: true });
+            }
+            const mockFilePath = path.join(mockS3Dir, fileKey.replace(/\//g, '-'));
+            fs.writeFileSync(mockFilePath, file.buffer);
+            console.log(`[MOCK AWS] File saved locally to: ${mockFilePath}`);
         } else {
             const bucketName = process.env.S3_BUCKET_NAME;
             const kmsKeyId = process.env.KMS_KEY_ID;
@@ -142,6 +150,14 @@ exports.deleteFile = async (req, res) => {
                 Key: file.s3Key,
             });
             await s3Client.send(command);
+        } else {
+            const fs = require('fs');
+            const path = require('path');
+            const mockFilePath = path.join(__dirname, '../mock_s3', file.s3Key.replace(/\//g, '-'));
+            if (fs.existsSync(mockFilePath)) {
+                fs.unlinkSync(mockFilePath);
+                console.log(`[MOCK AWS] Deleted local file: ${mockFilePath}`);
+            }
         }
 
         await file.deleteOne();
