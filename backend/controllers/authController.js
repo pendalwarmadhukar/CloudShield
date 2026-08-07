@@ -47,6 +47,12 @@ exports.register = async (req, res) => {
     } catch (error) {
         console.error('Registration Error:', error);
         
+        // Handle Mongoose Validation Error (e.g. password too short)
+        if (error.name === 'ValidationError') {
+            const message = Object.values(error.errors).map(val => val.message).join(', ');
+            return res.status(400).json({ error: message });
+        }
+
         // Handle MongoDB Duplicate Key Error (Code 11000)
         if (error.code === 11000) {
             const field = Object.keys(error.keyValue)[0];
